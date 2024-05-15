@@ -3,7 +3,7 @@ import ConnectWalletModal from "@/components/connectWallet/ConnectWalletModal";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CircleHelp } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const statistics = [
   {
@@ -54,6 +54,31 @@ const statistics = [
 
 
 function MainContent({selectedTab}: {selectedTab: string}) {
+  const [inputValue, setInputValue] = useState(0);
+  const [recieveValue, setRecieveValue] = useState(0);
+
+  const calculateRecieveValue = (value: number, type: string) => {
+    if(type === "avax") {
+      setRecieveValue(value * 0.8722);
+    } else {
+      setRecieveValue(value * 1.1465);
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleInput = (e: any, type: string) => {
+    setInputValue(e.target.value);
+    calculateRecieveValue(e.target.value, type);
+  }
+
+  useEffect(() => {
+    if(selectedTab === "stack"){
+      calculateRecieveValue(inputValue, "avax");
+    } else if(selectedTab === "unstack") {
+      calculateRecieveValue(inputValue, "savax");
+    }
+  }, [selectedTab])
+
   return (
     <div className="bg-aliceBlue dark:bg-gunmetal p-5 md:p-10 rounded-lg w-full lg:w-[856px] mt-12">
       <div className={`dark:text-white flex gap-y-5 flex-col`}>
@@ -64,6 +89,8 @@ function MainContent({selectedTab}: {selectedTab: string}) {
               type="number"
               className="w-full text-right md:text-left focus:outline-none text-xl md:text-3xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="0.00"
+              value={inputValue}
+              onChange={(e) => handleInput(e, selectedTab === "stack" ? "avax" : "savax")}
               style={{
                 background: 'transparent',
               }}
@@ -86,7 +113,7 @@ function MainContent({selectedTab}: {selectedTab: string}) {
               />
                <p className="text-[22px]">{selectedTab === "stack" ? "AVAX" : "sAVAX"}</p>
             </div>
-          <p className="mt-2 font-light text-right md:text-left">1 AVAX ≈ 0.8723 sAVAX</p>
+          <p className="mt-2 font-light text-right md:text-left"> { selectedTab === "stack" ? "1 AVAX ≈ 0.8722 sAVAX" : "1 sAVAX ≈ 1.1465 AVAX"}</p>
           <div className="absolute -bottom-[20px] left-[42%] md:left-[45%] w-full">
             <BottomArrow className={`${selectedTab === "stack" ? "text-princetonOrange fill-white dark:fill-gunmetal" : "text-processCyan fill-white dark:fill-gunmetal"}`}/>
           </div>
@@ -101,6 +128,8 @@ function MainContent({selectedTab}: {selectedTab: string}) {
               type="number"
               className="w-full text-right md:text-left focus:outline-none text-xl md:text-3xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="0.00"
+              value={recieveValue}
+              readOnly={true}
               style={{
                 background: 'transparent',
               }}
@@ -122,7 +151,6 @@ function MainContent({selectedTab}: {selectedTab: string}) {
               />
               <p className="text-[20px]">sAVAX</p>
             </div>
-          <p className="mt-2 font-light text-right md:text-left">1 AVAX ≈ 0.8723 sAVAX</p>
         </div>
       </div>
       <div className="flex items-center justify-center my-10">
@@ -163,7 +191,7 @@ function MainContent({selectedTab}: {selectedTab: string}) {
 }
 
 function Unstack() {
-  const [selectedTab, setSelectedTab] = useState<string>("stack");
+  const [selectedTab, setSelectedTab] = useState<string>("unstack");
   return (
     <div className="pt-5 md:pt-40 px-5 md:px-10 max-w-3xl mx-auto flex flex-col items-center pb-10">
       <h1 className="text-3xl mb-3 font-medium dark:text-white">Liquid Staking</h1>
