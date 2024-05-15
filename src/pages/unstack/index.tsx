@@ -54,10 +54,14 @@ const statistics = [
 
 
 function MainContent({selectedTab}: {selectedTab: string}) {
-  const [inputValue, setInputValue] = useState(0);
-  const [recieveValue, setRecieveValue] = useState(0);
+  const [inputValue, setInputValue] = useState<number | undefined>();
+  const [recieveValue, setRecieveValue] = useState<number | undefined>();
 
-  const calculateRecieveValue = (value: number, type: string) => {
+  const calculateRecieveValue = (value: number | undefined, type: string) => {
+    if(value === undefined){
+      setRecieveValue(0);
+      return;
+    }
     if(type === "avax") {
       setRecieveValue(value * 0.8722);
     } else {
@@ -65,6 +69,20 @@ function MainContent({selectedTab}: {selectedTab: string}) {
     }
   }
 
+  const invalidChars = [
+    "-",
+    "+",
+    "e",
+    "E"
+  ];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleInputKeyDown = (e: any) => {
+    if(invalidChars.includes(e.key)){
+      e.preventDefault();
+      return;
+    }
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleInput = (e: any, type: string) => {
     setInputValue(e.target.value);
@@ -90,6 +108,7 @@ function MainContent({selectedTab}: {selectedTab: string}) {
               className="w-full text-right md:text-left focus:outline-none text-xl md:text-3xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="0.00"
               value={inputValue}
+              onKeyDown={handleInputKeyDown}
               onChange={(e) => handleInput(e, selectedTab === "stack" ? "avax" : "savax")}
               style={{
                 background: 'transparent',
