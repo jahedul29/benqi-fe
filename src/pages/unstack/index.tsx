@@ -53,13 +53,13 @@ const statistics = [
 ];
 
 
-function MainContent() {
+function MainContent({selectedTab}: {selectedTab: string}) {
   return (
     <div className="bg-aliceBlue dark:bg-gunmetal p-5 md:p-10 rounded-lg w-full lg:w-[856px] mt-12">
-      <div className="dark:text-white">
-        <div className="border border-princetonOrange rounded-t-lg pt-4 px-5 md:px-10 pb-10 md:pb-14 bg-white dark:bg-richBlack relative">
-          <p className="text-xl">Stack</p>
-          <div className="flex justify-between border border-princetonOrange rounded-xl mt-2 px-4 py-2 md:py-6 h-[51px] md:h-20">
+      <div className={`dark:text-white flex gap-y-5 flex-col`}>
+        <div className={`border rounded-t-lg pt-4 px-5 md:px-10 pb-10 md:pb-14 bg-white dark:bg-richBlack relative ${selectedTab === "stack" ? "border-princetonOrange" : "border-processCyan"}`}>
+          <p className="text-xl">{selectedTab === "stack" ? "Stack" : "Unstack"}</p>
+          <div className={`flex justify-between border rounded-xl mt-2 px-4 py-2 md:py-6 h-[51px] md:h-20 ${selectedTab === "stack" ? "border-princetonOrange" : "border-processCyan"}`}>
             <input
               type="number"
               className="w-full text-right md:text-left focus:outline-none text-xl md:text-3xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -70,33 +70,33 @@ function MainContent() {
             />
             <div className="w-[130px] hidden md:flex gap-x-2 items-center">
               <img
-                src="/assets/images/avax.png"
+                src={ selectedTab === "stack" ? "/assets/images/avax.png" : "/assets/images/savax.png"}
                 alt="logo"
                 className="w-[30px] h-[30px]"
               />
-              <p className="text-[22px]">AVAX</p>
+              <p className="text-[22px]">{selectedTab === "stack" ? "AVAX" : "sAVAX"}</p>
             </div>
             
           </div>
           <div className="w-[100px] flex md:hidden gap-x-2 items-center ml-auto mt-2">
               <img
-                src="/assets/images/avax.png"
+                src={ selectedTab === "stack" ? "/assets/images/avax.png" : "/assets/images/savax.png"}
                 alt="logo"
                 className="w-[24px] h-[24px]"
               />
-              <p className="text-[20px]">AVAX</p>
+               <p className="text-[22px]">{selectedTab === "stack" ? "AVAX" : "sAVAX"}</p>
             </div>
           <p className="mt-2 font-light text-right md:text-left">1 AVAX ≈ 0.8723 sAVAX</p>
           <div className="absolute -bottom-[20px] left-[42%] md:left-[45%] w-full">
-            <BottomArrow className="text-princetonOrange fill-white dark:fill-gunmetal"/>
+            <BottomArrow className={`${selectedTab === "stack" ? "text-princetonOrange fill-white dark:fill-gunmetal" : "text-processCyan fill-aliceBlue dark:fill-gunmetal"}`}/>
           </div>
         </div>
-        <div className="border border-processCyan rounded-b-lg pt-4 px-5 md:px-10 pb-10 md:pb-14 bg-white dark:bg-richBlack mt-5 relative">
+        <div className={`border rounded-b-lg pt-4 px-5 md:px-10 pb-10 md:pb-14 bg-white dark:bg-richBlack relative ${selectedTab === "stack" ? "border-processCyan" : "border-princetonOrange"}`}>
           <div className="absolute -top-[1px] left-[42%] md:left-[45%] w-full">
-            <BottomArrow className="text-processCyan fill-aliceBlue dark:fill-gunmetal"/>
+            <BottomArrow  className={`${selectedTab === "stack" ? "text-processCyan fill-aliceBlue dark:fill-gunmetal" : "text-princetonOrange fill-white dark:fill-gunmetal"}`} />
           </div>
           <p className="text-xl">Recieve</p>
-          <div className="flex justify-between border border-processCyan rounded-xl mt-2 px-4 py-2 md:py-6 h-[51px] md:h-20">
+          <div className={`flex justify-between border rounded-xl mt-2 px-4 py-2 md:py-6 h-[51px] md:h-20 ${selectedTab === "stack" ? "border-processCyan" : "border-princetonOrange"}`}>
             <input
               type="number"
               className="w-full text-right md:text-left focus:outline-none text-xl md:text-3xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -107,16 +107,16 @@ function MainContent() {
             />
             <div className="w-[130px] hidden md:flex gap-x-2 items-center">
               <img
-                src="/assets/images/savax.png"
+                src={ selectedTab === "stack" ? "/assets/images/savax.png" : "/assets/images/avax.png"}
                 alt="logo"
                 className="w-[30px] h-[30px]"
               />
-              <p className="text-[22px]">sAVAX</p>
+              <p className="text-[22px]">{selectedTab === "stack" ? "sAVAX" : "AVAX"}</p>
             </div>
           </div>
           <div className="w-[100px] flex md:hidden gap-x-2 items-center ml-auto mt-2">
               <img
-                src="/assets/images/savax.png"
+                 src={ selectedTab === "stack" ? "/assets/images/savax.png" : "/assets/images/avax.png"}
                 alt="logo"
                 className="w-[24px] h-[24px]"
               />
@@ -124,7 +124,8 @@ function MainContent() {
             </div>
           <p className="mt-2 font-light text-right md:text-left">1 AVAX ≈ 0.8723 sAVAX</p>
         </div>
-        <div className="flex items-center justify-center my-10">
+      </div>
+      <div className="flex items-center justify-center my-10">
         <Dialog>
           <DialogTrigger>
             <button className="rounded-lg bg-processCyan/10 text-processCyan w-[203px] text-center border border-processCyan py-2 mx-auto">
@@ -134,7 +135,6 @@ function MainContent() {
           <ConnectWalletModal/>
         </Dialog>
         </div>
-      </div>
       <div className="px-0 md:px-10 dark:text-white">
         <p className="text-[22px]">Liquid Staking Statistics</p>
         <hr className="border-.5 border-processCyan my-2" />
@@ -204,7 +204,7 @@ function Unstack() {
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <MainContent />
+      <MainContent selectedTab={selectedTab} />
     </div>
   );
 }
