@@ -88,12 +88,12 @@ function MainContent({selectedTab}: {selectedTab: string}) {
             </div>
           <p className="mt-2 font-light text-right md:text-left">1 AVAX ≈ 0.8723 sAVAX</p>
           <div className="absolute -bottom-[20px] left-[42%] md:left-[45%] w-full">
-            <BottomArrow className={`${selectedTab === "stack" ? "text-princetonOrange fill-white dark:fill-gunmetal" : "text-processCyan fill-aliceBlue dark:fill-gunmetal"}`}/>
+            <BottomArrow className={`${selectedTab === "stack" ? "text-princetonOrange fill-white dark:fill-gunmetal" : "text-processCyan fill-white dark:fill-gunmetal"}`}/>
           </div>
         </div>
         <div className={`border rounded-b-lg pt-4 px-5 md:px-10 pb-10 md:pb-14 bg-white dark:bg-richBlack relative ${selectedTab === "stack" ? "border-processCyan" : "border-princetonOrange"}`}>
           <div className="absolute -top-[1px] left-[42%] md:left-[45%] w-full">
-            <BottomArrow  className={`${selectedTab === "stack" ? "text-processCyan fill-aliceBlue dark:fill-gunmetal" : "text-princetonOrange fill-white dark:fill-gunmetal"}`} />
+            <BottomArrow  className={`${selectedTab === "stack" ? "text-processCyan fill-aliceBlue dark:fill-gunmetal" : "text-princetonOrange fill-aliceBlue dark:fill-gunmetal"}`} />
           </div>
           <p className="text-xl">Recieve</p>
           <div className={`flex justify-between border rounded-xl mt-2 px-4 py-2 md:py-6 h-[51px] md:h-20 ${selectedTab === "stack" ? "border-processCyan" : "border-princetonOrange"}`}>

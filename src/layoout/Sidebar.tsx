@@ -2,45 +2,36 @@ import ConnectWalletModal from "@/components/connectWallet/ConnectWalletModal";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Logo from '@/assets/svgs/Logo'
+import { AppContext } from "@/App";
 
 function Sidebar() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  // const handleDarkMode = (val: boolean) => {
-  //   console.log({ val });
-  //   setIsDarkMode(val);
-  //   localStorage.setItem("darkMode", val.toString());
-  //   if (val) {
-  //     document.documentElement.classList.add('dark')
-  //   } else {
-  //     document.documentElement.classList.remove('dark')
-  //   }
-  // };
+  const {isDarkMode, setIsDarkMode} = useContext(AppContext);
 
-  useEffect(() => {
-    const isDrkMode = localStorage.getItem('darkMode') === 'true';
-    if(isDrkMode){
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('darkMode', 'true');
-    }else{
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('darkMode', 'false');
-    }
-    setIsDarkMode(isDrkMode);
-  }, []);
+  // useEffect(() => {
+  //   const isDrkMode = localStorage.getItem('darkMode') === 'true';
+  //   if(isDrkMode){
+  //     document.documentElement.classList.add('dark');
+  //     // localStorage.setItem('darkMode', 'true');
+  //   }else{
+  //     document.documentElement.classList.remove('dark');
+  //     localStorage.setItem('darkMode', 'false');
+  //   }
+  //   setIsDarkMode(isDrkMode);
+  // }, []);
 
   const handleDarkMode = (val: boolean) => {
     if(val){
       document.documentElement.classList.add('dark');
-      localStorage.setItem('darkMode', 'true');
+      setIsDarkMode(val)
+      // localStorage.setItem('darkMode', 'true');
     }else{
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('darkMode', 'false');
+      // localStorage.setItem('darkMode', 'false');
+      setIsDarkMode(val)
     }
-    setIsDarkMode((prevMode) => !prevMode);
-    // document.documentElement.classList.toggle('dark', isDarkMode);
-    
+    // setIsDarkMode((prevMode) => !prevMode);
   };
 
   console.log({isDarkMode})
