@@ -12,7 +12,7 @@ function MainLayout({children}: {children: ReactNode}) {
         <div className="block md:hidden w-full">
           <MobileHeader/>
         </div>
-        <div className='w-full overflow-y-auto'>
+        <div className='w-full overflow-y-auto overflow-x-hidden'>
             {children}
         </div>
     </div>
