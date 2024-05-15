@@ -34,8 +34,6 @@ function Sidebar() {
     // setIsDarkMode((prevMode) => !prevMode);
   };
 
-  console.log({isDarkMode})
-
   return (
     <div className="w-full md:w-[16rem] h-screen overflow-y-auto relative bg-aliceBlue dark:bg-gunmetal px-7 py-8 relative">
       <a className="flex">
